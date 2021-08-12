@@ -75,3 +75,9 @@ exports.getEmployeesNoProject = async () => {
     "FROM project inner join employee_project pe Using(proj_id) " +
     "right outer join employee Using(emp_id) group by emp_id having Projects = 0;")
 }
+
+exports.getProjectsEmployee = async () => {
+    return await db.query("SELECT proj_name, proj_id, count(emp_id) as Devs " +
+    "FROM employee e inner join employee_project pe Using(emp_id) " +
+    "right outer join project p Using(proj_id) group by proj_id;")
+}

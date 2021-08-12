@@ -115,4 +115,8 @@ router.post('/addproject', async (req, res) => {
     res.render('project-no-employees', {projects: await employeeData.getProjectsNoEmployee() } );
   })
 
+  router.get('/project-employees', async (req, res) => {
+    res.render('project-employees', {projects: await employeeData.getProjectsEmployee() } );
+  })
+
 module.exports = router

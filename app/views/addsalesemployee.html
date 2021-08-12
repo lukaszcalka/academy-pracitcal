@@ -1,0 +1,136 @@
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+
+
+
+{% extends "layout_unbranded.html" %} 
+
+{% block content %}
+
+{{ govukInsetText({
+    text: "Please fill in the form below with the sales employee's details."
+  }) }}
+
+{% if errormessage %} 
+  <div class="govuk-error-message">{{ errormessage }}</div> 
+{% endif %}
+
+<form action="/addsalesemployee" method="POST">
+{{ govukInput({
+    label: {
+        text: "Enter the employee's ID: 
+        (optional)",
+        classes: "govuk-label--m",
+        isPageHeading: true
+    },
+    classes: "govuk-input--width-20",
+    id: "emp_id",
+    name: "emp_id",
+    value: data["emp_id"]
+  }) }}
+
+  {{ govukInput({
+    label: {
+      text: "Enter the employee's first name:",
+      classes: "govuk-label--m",
+      isPageHeading: true
+    },
+    classes: "govuk-input--width-20",
+    id: "emp_first_name",
+    name: "emp_first_name",
+    value: data["emp_first_name"]
+  }) }}
+
+  {{ govukInput({
+    label: {
+      text: "Enter the employee's last name:",
+      classes: "govuk-label--m",
+      isPageHeading: true
+    },
+    classes: "govuk-input--width-20",
+    id: "emp_last_name",
+    name: "emp_last_name",
+    value: data["emp_last_name"]
+  }) }}
+
+  {{ govukInput({
+    label: {
+      text: "Enter the employee's National Insurance Number:",
+      classes: "govuk-label--m",
+      isPageHeading: true
+    },
+    hint: {
+        text: "Please follow the format: QQ 12 34 56 A "
+      },
+      classes: "govuk-input--width-20",
+    id: "emp_nin",
+    name: "emp_nin",
+    value: data["emp_nin"]
+  }) }}
+
+  {{ govukInput({
+    label: {
+      text: "Enter the employee's account number",
+      classes: "govuk-label--m",
+      isPageHeading: true
+    },
+    classes: "govuk-input--width-20",
+    hint: {
+      text: "Must be between 6 and 8 digits long"
+    },
+    id: "emp_account_no",
+    name: "emp_account_no",
+    alue: data["emp_account_no"],
+    inputmode: "numeric",
+    pattern: "[0-9]*",
+    spellcheck: false
+  }) }}
+
+  {{ govukInput({
+    label: {
+      text: "Enter the employee's salary:",
+      classes: "govuk-label--m",
+      isPageHeading: true
+    },
+    classes: "govuk-input--width-20",
+    id: "emp_salary",
+    name: "emp_salary",
+    value: data["emp_salary"]
+
+  }) }}
+
+  {{ govukInput({
+    label: {
+      text: "Enter the employee's commission rate:",
+      classes: "govuk-label--m",
+      isPageHeading: true
+    },
+    classes: "govuk-input--width-20",
+    id: "s_emp_com_rate",
+    name: "s_emp_com_rate",
+    value: data["s_emp_com_rate"]
+
+  }) }}
+
+  {{ govukInput({
+    label: {
+      text: "Enter the employee's total sales:",
+      classes: "govuk-label--m",
+      isPageHeading: true
+    },
+    classes: "govuk-input--width-20",
+    id: "s_emp_tot_sales",
+    name: "s_emp_tot_sales",
+    value: data["s_emp_tot_sales"]
+
+  }) }}
+
+  {{ govukButton({
+    text: "Confirm and send",
+    preventDoubleClick: true
+  }) }}
+
+</form>
+{% endblock %}

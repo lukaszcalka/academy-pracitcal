@@ -14,6 +14,18 @@ router.get('/choose-dep', async (req, res) => {
     res.render('choose-dep');
 })
 
+router.get('/talent-menu', async (req, res) => {
+    res.render('talent-menu');
+})
+
+router.get('/finance-menu', async (req, res) => {
+    res.render('finance-menu');
+})
+
+router.get('/sales-menu', async (req, res) => {
+    res.render('sales-menu');
+})
+
 // router.post('/new-employee', async (req, res) => {
 //     res
 // })

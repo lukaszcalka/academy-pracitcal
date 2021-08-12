@@ -30,3 +30,8 @@ const getEmployees = async () => {
      const result = await db.query("INSERT INTO Employee SET ?", Emloyee);
      return result.insertId;
    }
+
+exports.addSalesEmployee = async (Sales) => {
+    const result = await db.query("INSERT INTO sales_employee SET ?", Sales);
+     return result.insertId;
+}

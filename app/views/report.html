@@ -14,18 +14,17 @@
     <div class="govuk-grid-column-two-thirds">
 
       <h1 class="govuk-heading-xl">
-        List of employees
+        Employees and their department
       </h1>
 
       {% if employees and employees.length > 0 %} 
       {% set emprows = [] %} 
-      {% for emp in employees | sort(attribute='emp_id') %}
-      {% set emprows = (emprows.push([{ text: emp.emp_id }, {text: emp.emp_first_name}, {text: emp.emp_last_name}, 
-                    {text: emp.emp_nin}, {text: emp.emp_account_no}, {text: emp.emp_salary}, {text: emp.emp_bu}]), emprows) %} 
+      {% for emp in employees %}
+      {% set emprows = (emprows.push([{text: emp.emp_first_name}, {text: emp.emp_last_name}, 
+                    {text: emp.emp_bu}]), emprows) %} 
       {% endfor %} 
       {{govukTable({ 
-         head: [{ text: "ID" },{ text: "Name" },{ text: "Last Name" }, 
-            { text: "NIN" },{ text: "Account" }, {text: "Salary"},
+         head: [{ text: "Name" },{ text: "Last Name" },
             {text: "Business Unit"} ], 
             rows: emprows }) 
       }} 

@@ -26,6 +26,10 @@ router.get('/sales-menu', async (req, res) => {
     res.render('sales-menu');
 })
 
+router.get('/generate-report', async (req, res) => {
+    res.render('report', {employees: await employeeData.getReport() })
+})
+
 // router.post('/new-employee', async (req, res) => {
 //     res
 // })

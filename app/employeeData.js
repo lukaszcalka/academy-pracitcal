@@ -35,3 +35,7 @@ exports.addSalesEmployee = async (Sales) => {
     const result = await db.query("INSERT INTO sales_employee SET ?", Sales);
      return result.insertId;
 }
+
+exports.getReport = async () => {
+    return await db.query("select emp_first_name, emp_last_name, emp_bu from employee order by emp_bu;")
+}

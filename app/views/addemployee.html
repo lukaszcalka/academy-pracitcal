@@ -20,7 +20,8 @@
 <form action="/addemployee" method="POST">
 {{ govukInput({
     label: {
-        text: "Enter the employee's ID:",
+        text: "Enter the employee's ID: 
+        (optional)",
         classes: "govuk-label--m",
         isPageHeading: true
     },
@@ -128,10 +129,6 @@
       {
         value: "digital_services",
         text: "Digital Services"
-      },
-      {
-        value: "sales",
-        text: "Sales Department"
       }
     ]
   }) }}

@@ -55,6 +55,42 @@ exports.getSalesEmployees =  async () => {
 
 exports.getEmployeeIDbyNIN = async (emp) =>{
         id  = await db.query("select emp_id from employee where `emp_nin` = "+ mysql.escape(emp.emp_nin));
-        return id;
+        return id;}
 
+    
+const getProjects = async () => {
+    return await db.query(
+        "SELECT * FROM project",[])
+    
+}
+
+exports.getProjects = getProjects;
+
+exports.addProject = async (Project) =>
+{
+    const result = await db.query("INSERT INTO project SET ?", Project);
+     return result.insertId;
+}
+
+exports.getHighestSales = async () => {
+    return await db.query("select emp_first_name, emp_last_name, s_emp_tot_sales as Sales" +
+    " from employee inner join sales_employee using(emp_id) order by Sales desc limit 1;")
+}
+
+exports.getProjectsNoEmployee = async () => {
+    return await db.query("SELECT proj_name, proj_id, count(emp_id) as Devs " +
+    "FROM employee e inner join employee_project pe Using(emp_id) " +
+    "right outer join project p Using(proj_id) group by proj_name having Devs = 0;")
+}
+
+exports.getEmployeesNoProject = async () => {
+    return await db.query("SELECT emp_id, emp_first_name, emp_last_name, count(proj_id) as Projects " +
+    "FROM project inner join employee_project pe Using(proj_id) " +
+    "right outer join employee Using(emp_id) group by emp_id having Projects = 0;")
+}
+
+exports.getProjectsEmployee = async () => {
+    return await db.query("SELECT proj_name, proj_id, count(emp_id) as Devs " +
+    "FROM employee e inner join employee_project pe Using(emp_id) " +
+    "right outer join project p Using(proj_id) group by proj_id;")
 }

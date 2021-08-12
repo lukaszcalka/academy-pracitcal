@@ -1,2 +1,7 @@
 node_modules/
 dbconfig.json
+_extensions.scss
+application-ie8.css
+application.css
+unbranded-ie8.css
+unbranded.css

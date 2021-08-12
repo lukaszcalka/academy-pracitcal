@@ -1,0 +1,126 @@
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+
+{% extends "layout_unbranded.html" %} 
+
+{% block content %}
+<form action="/addemployee" method="POST">
+{{ govukInput({
+    label: {
+        text: "Enter the employee's ID:",
+        classes: "govuk-input--width-5",
+        classes: "govuk-label--l",
+        isPageHeading: true
+    },
+    id: "id",
+    name: "id",
+    value: data["id"]
+  }) }}
+
+  {{ govukInput({
+    label: {
+      text: "Enter the employee's first name:",
+      classes: "govuk-label--l",
+      isPageHeading: true
+    },
+    id: "firstname",
+    name: "firstname",
+    value: data["firstname"]
+  }) }}
+
+  {{ govukInput({
+    label: {
+      text: "Enter the employee's last name:",
+      classes: "govuk-label--l",
+      isPageHeading: true
+    },
+    id: "lastname",
+    name: "lastname",
+    value: data["lastname"]
+  }) }}
+
+  {{ govukInput({
+    label: {
+      text: "Enter the employee's National Insurance Number:",
+      classes: "govuk-label--l",
+      isPageHeading: true
+    },
+    hint: {
+        text: "Please follow the format: QQ 12 34 56 A "
+      },
+    id: "nin",
+    name: "nin",
+    value: data["nin"]
+  }) }}
+
+  {{ govukInput({
+    label: {
+      text: "Enter the employee's account number:",
+      classes: "govuk-label--l",
+      isPageHeading: true
+    },
+    hint: {
+        text: "Please follow the format: GBNN AAAA NNNN NNNN NNNN NN"
+    },
+    id: "accountno",
+    name: "accountno",
+    value: data["accountno"]
+  }) }}
+
+  {{ govukInput({
+    label: {
+      text: "Enter the employee's salary:",
+      classes: "govuk-label--l",
+      isPageHeading: true
+    },
+   
+    id: "salary",
+    name: "salary",
+    value: data["salary"]
+
+  }) }}
+
+  {{ govukRadios({
+    idPrefix: "employee-business-unit",
+    name: "employee-business-unit",
+    fieldset: {
+      legend: {
+        text: "Select the employee's Business Unit:",
+        isPageHeading: true,
+        classes: "govuk-fieldset__legend--l"
+      }
+    },
+
+    items: [
+      {
+        value: "people",
+        text: "People Support"
+      },
+      {
+        value: "applied_inovation",
+        text: "Applied Innovation"
+      },
+      {
+        value: "finance",
+        text: "Finance"
+      },
+      {
+        value: "digital_services",
+        text: "Digital Services"
+      },
+      {
+        value: "sales",
+        text: "Sales Department"
+      }
+    ]
+  }) }}
+
+  {{ govukButton({
+    text: "Confirm and send",
+    preventDoubleClick: true
+  }) }}
+
+</form>
+{% endblock %}

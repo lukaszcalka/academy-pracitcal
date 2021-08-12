@@ -69,5 +69,9 @@ router.post('/addemployee', async (req, res) => {
     res.render('addemployee', req.body ) 
   }})
 
+  router.get('/addsalesemployee', async (req, res) => {
+    res.render('addsalesemployee');
+})
+
 
 module.exports = router

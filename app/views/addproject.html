@@ -1,0 +1,84 @@
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+
+
+
+{% extends "layout_unbranded.html" %} 
+
+{% block content %}
+
+{{ govukInsetText({
+    text: "Please fill in the form below with the project's details."
+  }) }}
+
+{% if errormessage %} 
+  <div class="govuk-error-message">{{ errormessage }}</div> 
+{% endif %}
+
+<form action="/addproject" method="POST">
+{{ govukInput({
+    label: {
+        text: "Enter the project's ID:",
+        classes: "govuk-label--m",
+        isPageHeading: true
+    },
+    classes: "govuk-input--width-20",
+    id: "proj_id",
+    name: "proj_id",
+    value: data["proj_id"]
+  }) }}
+
+  {{ govukInput({
+    label: {
+      text: "Enter the project's name:",
+      classes: "govuk-label--m",
+      isPageHeading: true
+    },
+    classes: "govuk-input--width-20",
+    id: "proj_name",
+    name: "proj_name",
+    value: data["proj_name"]
+  }) }}
+
+ 
+
+  {{ govukInput({
+    label: {
+      text: "Enter the starting date of the project",
+      classes: "govuk-label--m",
+      isPageHeading: true
+    },
+    hint: {
+        text: "Please follow the format: YYYY-MM-DD"
+      },
+      classes: "govuk-input--width-20",
+    id: "proj_start_date",
+    name: "proj_start_date",
+    value: data["proj_start_date"]
+  }) }}
+
+  {{ govukInput({
+    label: {
+      text: "Enter the expected end date of the project",
+      classes: "govuk-label--m",
+      isPageHeading: true
+    },
+    hint: {
+        text: "Please follow the format: YYYY-MM-DD"
+      },
+      classes: "govuk-input--width-20",
+    id: "proj_end_date",
+    name: "proj_end_date",
+    value: data["proj_end_date"]
+  }) }}
+
+
+  {{ govukButton({
+    text: "Confirm and send",
+    preventDoubleClick: true
+  }) }}
+
+</form>
+{% endblock %}

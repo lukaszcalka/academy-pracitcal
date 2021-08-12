@@ -38,42 +38,98 @@ router.get('/highest-sales', async (req, res) => {
 })
 
 
-// router.post('/new-employee', async (req, res) => {
-//     res
-// })
+
 router.get('/addemployee', async (req, res) => {
     res.render('addemployee');
 })
 
-router.post('/addemployee', async (req, res) => { 
-    var emp = req.body 
-    // validate here 
+validate_employee_form = async function(emp, req, res, sales){
     var first_name = req.body.emp_first_name; 
     var last_name = req.body.emp_last_name;
     var nin = req.body.emp_nin;
+    var bank_acc = req.body.emp_account_no
+    var acc_no_regex=/^(\d){7,8}$/u;
     var pain = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u;
     if((!first_name.search(pain))){ 
         if(!last_name.search(pain)){
-            if(!nin.search(/^\s*[a-zA-Z]{2}(?:\s*\d\s*){6}[a-zA-Z]?\s*$/u)){
-                let insertedKey = await employeeData.addEmployee(req.body) 
-                res.render('list-employees', { employees: await employeeData.getEmployees()} ) 
+            if(!bank_acc.search(acc_no_regex)){
+                if(!nin.search(/^\s*[a-zA-Z]{2}(?:\s*\d\s*){6}[a-zA-Z]?\s*$/u)){
+                    if(sales===0){
+                    let insertedKey = await employeeData.addEmployee(req.body) 
+                    res.render('list-employees', { employees: await employeeData.getEmployees()} ) 
+                    }else
+                    {
+                        emp["emp_bu"] = "sales"
+                        let insertedKey = await employeeData.addEmployee(req.body) 
+                        validate_salesemployee_form(emp,req,res)
+                    }
+                }else{
+                    res.locals.errormessage = "Wrong last name format" 
+                    if (sales === 0){
+                        res.render('addemployee', req.body ) 
+                    }else{
+                        res.render('addsalesemployee', req.body ) 
+                    }}
             }else{
-                res.locals.errormessage = "Wrong last name format" 
+                res.locals.errormessage = "Wrong bank account number format" 
+                if (sales === 0){
                 res.render('addemployee', req.body ) 
+                }else{
+                    res.render('addsalesemployee', req.body ) 
+                }
             }
+            
         }else{
             res.locals.errormessage = "Wrong national insurance number format" 
+            if (sales === 0){
             res.render('addemployee', req.body ) 
+            }else{
+                res.render('addsalesemployee', req.body ) 
+            }
         }
       
   } else {
     res.locals.errormessage = "Wrong first name format" 
+    if (sales === 0){
     res.render('addemployee', req.body ) 
-  }})
+    }else{
+        res.render('addsalesemployee', req.body ) 
+    }
+  }
+    }
 
-  router.get('/addsalesemployee', async (req, res) => {
+validate_salesemployee_form = async function(emp, req, res){
+    percentage_regex = /\b(?<!\.)(?!0+(?:\.0+)?%)(?:\d|[1-9]\d|100)(?:(?<!100)\.\d+)?%/u;
+    sales_regex = /^[0-9]\d*$/u;
+    if (!emp.s_emp_tot_sales.search(sales_regex))
+    {
+        if(!emp.s_emp_com_rate.search(percentage_regex)){
+            let responseID = await employeeData.getEmployeeIDbyNIN(emp)
+            emp.emp_id=responseID[0].emp_id
+            let insertedKey = await employeeData.addSalesEmployee(emp) 
+            res.render('list-employees', { employees: await employeeData.getSalesEmployees()})
+        }else{
+            res.locals.errormessage = "Wrong commission rate format" 
+            res.render('addsalesemployee', req.body ) }
+    }else{
+        res.locals.errormessage = "Wrong sales format" 
+        res.render('addsalesemployee', req.body ) }
+}
+
+router.post('/addemployee', async (req, res) => { 
+    var emp = req.body 
+    // validate here 
+    validate_employee_form(emp, req, res, 0)
+    })
+
+router.get('/addsalesemployee', async (req, res) => {
     res.render('addsalesemployee');
 })
+router.post('/addsalesemployee', async (req, res) => { 
+    var emp = req.body 
+    // validate here 
+    validate_employee_form(emp, req, res, 1)
+    })
 
   router.get('/addproject', async (req, res) => {
     res.render('addproject');

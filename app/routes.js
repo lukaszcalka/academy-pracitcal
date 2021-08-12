@@ -1,4 +1,5 @@
-const express = require('express')
+const express = require('express');
+const { async } = require('rxjs');
 const router = express.Router();
 const employeeData = require('./employeeData.js');
 
@@ -94,6 +95,14 @@ router.post('/addproject', async (req, res) => {
 
   router.get('/list-projects', async (req, res) => {
     res.render('list-projects', {projects: await employeeData.getProjects() } );
+  })
+
+  router.get('/employees-no-project', async (req, res) => {
+    res.render('employees-no-project', {employees: await employeeData.getEmployeesNoProject() } );
+  })
+
+  router.get('/project-no-employees', async (req, res) => {
+    res.render('project-no-employees', {projects: await employeeData.getProjectsNoEmployee() } );
   })
 
 module.exports = router

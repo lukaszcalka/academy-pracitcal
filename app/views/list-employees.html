@@ -1,0 +1,39 @@
+{% extends "layout_unbranded.html" %}
+
+{% block pageTitle %}
+  Question page
+{% endblock %}
+
+{% block beforeContent %}
+  <a class="govuk-back-link" href="/url/of/previous/page">Back</a>
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">
+        Heading goes here
+      </h1>
+
+      {% if employees and employees.length > 0 %} 
+      {% set emprows = [] %} 
+      {% for emp in employees | sort(attribute='emp_id') %}
+      {% set emprows = (emprows.push([{ text: emp.emp_id }, {text: emp.emp_first_name}, {text: emp.emp_last_name}, 
+                    {text: emp.emp_nin}, {text: emp.emp_account_no}, {text: emp.emp_salary}, {text: emp.emp_bu}]), emprows) %} 
+      {% endfor %} 
+      {{govukTable({ 
+         head: [{ text: "ID" },{ text: "Name" },{ text: "Last Name" }, 
+            { text: "NIN" },{ text: "Account" }, {text: "Salary"},
+            {text: "Business Unit"} ], 
+            rows: emprows }) 
+      }} 
+      {% else %}
+      There are no employees. 
+      {% endif %}
+
+    </div>
+  </div>
+
+{% endblock %}

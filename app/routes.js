@@ -71,12 +71,10 @@ router.post('/addemployee', async (req, res) => {
     res.render('addemployee', req.body ) 
   }})
 
-<<<<<<< HEAD
   router.get('/addsalesemployee', async (req, res) => {
     res.render('addsalesemployee');
 })
 
-=======
   router.get('/addproject', async (req, res) => {
     res.render('addproject');
 })
@@ -116,6 +114,5 @@ router.post('/addproject', async (req, res) => {
   router.get('/project-no-employees', async (req, res) => {
     res.render('project-no-employees', {projects: await employeeData.getProjectsNoEmployee() } );
   })
->>>>>>> add_project_api
 
 module.exports = router

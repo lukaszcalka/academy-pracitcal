@@ -40,11 +40,11 @@ exports.getReport = async () => {
     return await db.query("select emp_first_name, emp_last_name, emp_bu from employee order by emp_bu;")
 }
 
-<<<<<<< HEAD
 exports.getHighestSales = async () => {
     return await db.query("select emp_first_name, emp_last_name, s_emp_tot_sales as Sales" +
     " from employee inner join sales_employee using(emp_id) order by Sales desc limit 1;")
-=======
+}
+    
 const getProjects = async () => {
     return await db.query(
         "SELECT * FROM project",[])
@@ -74,5 +74,4 @@ exports.getEmployeesNoProject = async () => {
     return await db.query("SELECT emp_id, emp_first_name, emp_last_name, count(proj_id) as Projects " +
     "FROM project inner join employee_project pe Using(proj_id) " +
     "right outer join employee Using(emp_id) group by emp_id having Projects = 0;")
->>>>>>> add_project_api
 }

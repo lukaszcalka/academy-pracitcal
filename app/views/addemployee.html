@@ -10,14 +10,13 @@
 {{ govukInput({
     label: {
         text: "Enter the employee's ID:",
-        classes: "govuk-input--width-5",
         classes: "govuk-label--l",
         isPageHeading: true
     },
     classes: "govuk-input--width-20",
-    id: "id",
-    name: "id",
-    value: data["id"]
+    id: "emp_id",
+    name: "emp_id",
+    value: data["emp_id"]
   }) }}
 
   {{ govukInput({
@@ -27,9 +26,9 @@
       isPageHeading: true
     },
     classes: "govuk-input--width-20",
-    id: "firstname",
-    name: "firstname",
-    value: data["firstname"]
+    id: "emp_first_name",
+    name: "emp_first_name",
+    value: data["emp_first_name"]
   }) }}
 
   {{ govukInput({
@@ -39,9 +38,9 @@
       isPageHeading: true
     },
     classes: "govuk-input--width-20",
-    id: "lastname",
-    name: "lastname",
-    value: data["lastname"]
+    id: "emp_last_name",
+    name: "emp_last_name",
+    value: data["emp_last_name"]
   }) }}
 
   {{ govukInput({
@@ -54,9 +53,9 @@
         text: "Please follow the format: QQ 12 34 56 A "
       },
       classes: "govuk-input--width-20",
-    id: "nin",
-    name: "nin",
-    value: data["nin"]
+    id: "emp_nin",
+    name: "emp_nin",
+    value: data["emp_nin"]
   }) }}
 
   {{ govukInput({
@@ -69,9 +68,9 @@
         text: "Please follow the format: GBNN AAAA NNNN NNNN NNNN NN"
     },
     classes: "govuk-input--width-20",
-    id: "accountno",
-    name: "accountno",
-    value: data["accountno"]
+    id: "emp_account_no",
+    name: "emp_account_no",
+    value: data["emp_account_no"]
   }) }}
 
   {{ govukInput({
@@ -81,15 +80,16 @@
       isPageHeading: true
     },
     classes: "govuk-input--width-20",
-    id: "salary",
-    name: "salary",
-    value: data["salary"]
+    id: "emp_salary",
+    name: "emp_salary",
+    value: data["emp_salary"]
 
   }) }}
 
   {{ govukRadios({
-    idPrefix: "employee-business-unit",
-    name: "employee-business-unit",
+    idPrefix: "emp_bu",
+    name: "emp_bu",
+    value: data["emp_bu"]
     fieldset: {
       legend: {
         text: "Select the employee's Business Unit:",

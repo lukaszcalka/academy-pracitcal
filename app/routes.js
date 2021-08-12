@@ -1,6 +1,8 @@
-const express = require('express')
+const express = require('express');
+const { async } = require('rxjs');
 const router = express.Router();
 const employeeData = require('./employeeData.js');
+
 
 router.get('/list-employees', async (req, res) => {
     res.render('list-employees', {employees: await employeeData.getEmployees() } );
@@ -69,9 +71,51 @@ router.post('/addemployee', async (req, res) => {
     res.render('addemployee', req.body ) 
   }})
 
+<<<<<<< HEAD
   router.get('/addsalesemployee', async (req, res) => {
     res.render('addsalesemployee');
 })
 
+=======
+  router.get('/addproject', async (req, res) => {
+    res.render('addproject');
+})
+
+router.post('/addproject', async (req, res) => { 
+    var emp = req.body 
+    // validate here 
+    var name = req.body.proj_name; 
+    var s_date = req.body.proj_start_date;
+    var e_date = req.body.proj_end_date;
+    var pain = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u;
+    var date_val = /^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/
+    if((!name.search(pain))){ 
+        if(!s_date.search(date_val) && !e_date.search(date_val)){
+            
+                let insertedKey = await employeeData.addProject(req.body) 
+                res.render('list-projects', { projects: await employeeData.getProjects()} ) 
+            }else{
+                res.locals.errormessage = "Wrong date format" 
+                res.render('addproject', req.body ) 
+            }
+        
+      
+  } else {
+    res.locals.errormessage = "Wrong name format" 
+    res.render('addproject', req.body ) 
+  }})
+
+  router.get('/list-projects', async (req, res) => {
+    res.render('list-projects', {projects: await employeeData.getProjects() } );
+  })
+
+  router.get('/employees-no-project', async (req, res) => {
+    res.render('employees-no-project', {employees: await employeeData.getEmployeesNoProject() } );
+  })
+
+  router.get('/project-no-employees', async (req, res) => {
+    res.render('project-no-employees', {projects: await employeeData.getProjectsNoEmployee() } );
+  })
+>>>>>>> add_project_api
 
 module.exports = router

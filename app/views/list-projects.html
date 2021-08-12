@@ -1,0 +1,38 @@
+{% extends "layout_unbranded.html" %}
+
+{% block pageTitle %}
+  Question page
+{% endblock %}
+
+{% block beforeContent %}
+  <a class="govuk-back-link" href="/hr-menu">Back</a>
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">
+        List of projects
+      </h1>
+
+      {% if projects and projects.length > 0 %} 
+      {% set prorows = [] %} 
+      {% for proj in projects | sort(attribute='proj_id') %}
+      {% set prorows = (prorows.push([{ text: proj.proj_id }, {text: proj.proj_name}, {text: proj.proj_start_date}, 
+                    {text: proj.proj_end_date}]), prorows) %} 
+      {% endfor %} 
+      {{govukTable({ 
+         head: [{ text: "ID" },{ text: "Name" },{ text: "Start Date" }, 
+            { text: "End Date" }], 
+            rows: prorows }) 
+      }} 
+      {% else %}
+      There are no projects. 
+      {% endif %}
+
+    </div>
+  </div>
+
+{% endblock %}

@@ -33,5 +33,35 @@ router.get('/generate-report', async (req, res) => {
 // router.post('/new-employee', async (req, res) => {
 //     res
 // })
+router.get('/addemployee', async (req, res) => {
+    res.render('addemployee');
+})
+
+router.post('/addemployee', async (req, res) => { 
+    var emp = req.body 
+    // validate here 
+    var first_name = req.body.emp_first_name; 
+    var last_name = req.body.emp_last_name;
+    var nin = req.body.emp_nin;
+    var pain = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u;
+    if((!first_name.search(pain))){ 
+        if(!last_name.search(pain)){
+            if(!nin.search(/^\s*[a-zA-Z]{2}(?:\s*\d\s*){6}[a-zA-Z]?\s*$/u)){
+                let insertedKey = await employeeData.addEmployee(req.body) 
+                res.render('list-employees', { employees: await employeeData.getEmployees()} ) 
+            }else{
+                res.locals.errormessage = "Wrong last name format" 
+                res.render('addemployee', req.body ) 
+            }
+        }else{
+            res.locals.errormessage = "Wrong national insurance number format" 
+            res.render('addemployee', req.body ) 
+        }
+      
+  } else {
+    res.locals.errormessage = "Wrong first name format" 
+    res.render('addemployee', req.body ) 
+  }})
+
 
 module.exports = router

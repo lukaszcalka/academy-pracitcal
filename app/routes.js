@@ -10,6 +10,10 @@ router.get('/hr-menu', async (req, res) => {
     res.render('hr-menu');
 })
 
+router.get('/choose-dep', async (req, res) => {
+    res.render('choose-dep');
+})
+
 // router.post('/new-employee', async (req, res) => {
 //     res
 // })

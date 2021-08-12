@@ -1,16 +1,27 @@
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+
 
 
 {% extends "layout_unbranded.html" %} 
 
 {% block content %}
+
+{{ govukInsetText({
+    text: "Please fill in the form below with the employee's details."
+  }) }}
+
+{% if errormessage %} 
+  <div class="govuk-error-message">{{ errormessage }}</div> 
+{% endif %}
+
 <form action="/addemployee" method="POST">
 {{ govukInput({
     label: {
         text: "Enter the employee's ID:",
-        classes: "govuk-label--l",
+        classes: "govuk-label--m",
         isPageHeading: true
     },
     classes: "govuk-input--width-20",
@@ -22,7 +33,7 @@
   {{ govukInput({
     label: {
       text: "Enter the employee's first name:",
-      classes: "govuk-label--l",
+      classes: "govuk-label--m",
       isPageHeading: true
     },
     classes: "govuk-input--width-20",
@@ -34,7 +45,7 @@
   {{ govukInput({
     label: {
       text: "Enter the employee's last name:",
-      classes: "govuk-label--l",
+      classes: "govuk-label--m",
       isPageHeading: true
     },
     classes: "govuk-input--width-20",
@@ -46,7 +57,7 @@
   {{ govukInput({
     label: {
       text: "Enter the employee's National Insurance Number:",
-      classes: "govuk-label--l",
+      classes: "govuk-label--m",
       isPageHeading: true
     },
     hint: {
@@ -60,23 +71,26 @@
 
   {{ govukInput({
     label: {
-      text: "Enter the employee's account number:",
-      classes: "govuk-label--l",
+      text: "Enter the employee's account number",
+      classes: "govuk-label--m",
       isPageHeading: true
     },
-    hint: {
-        text: "Please follow the format: GBNN AAAA NNNN NNNN NNNN NN"
-    },
     classes: "govuk-input--width-20",
+    hint: {
+      text: "Must be between 6 and 8 digits long"
+    },
     id: "emp_account_no",
     name: "emp_account_no",
-    value: data["emp_account_no"]
+    alue: data["emp_account_no"],
+    inputmode: "numeric",
+    pattern: "[0-9]*",
+    spellcheck: false
   }) }}
 
   {{ govukInput({
     label: {
       text: "Enter the employee's salary:",
-      classes: "govuk-label--l",
+      classes: "govuk-label--m",
       isPageHeading: true
     },
     classes: "govuk-input--width-20",
@@ -94,7 +108,7 @@
       legend: {
         text: "Select the employee's Business Unit:",
         isPageHeading: true,
-        classes: "govuk-fieldset__legend--l"
+        classes: "govuk-fieldset__legend--m"
       }
     },
 

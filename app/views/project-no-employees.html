@@ -1,0 +1,36 @@
+{% extends "layout_unbranded.html" %}
+
+{% block pageTitle %}
+  Question page
+{% endblock %}
+
+{% block beforeContent %}
+  <a class="govuk-back-link" href="/hr-menu">Back</a>
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">
+        List of projects with no employees assigned
+      </h1>
+
+      {% if projects and projects.length > 0 %} 
+      {% set projrows = [] %} 
+      {% for proj in projects %}
+      {% set projrows = (projrows.push([{ text: proj.proj_id }, {text: proj.proj_name}]), projrows) %} 
+      {% endfor %} 
+      {{govukTable({ 
+         head: [{ text: "ID" },{ text: "Name" } ], 
+            rows: projrows }) 
+      }} 
+      {% else %}
+      There are no projects. 
+      {% endif %}
+
+    </div>
+  </div>
+
+{% endblock %}

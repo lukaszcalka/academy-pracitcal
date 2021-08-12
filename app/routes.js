@@ -30,6 +30,12 @@ router.get('/generate-report', async (req, res) => {
     res.render('report', {employees: await employeeData.getReport() })
 })
 
+
+router.get('/highest-sales', async (req, res) => {
+    res.render('highest-sales', {employee: await employeeData.getHighestSales() })
+})
+
+
 // router.post('/new-employee', async (req, res) => {
 //     res
 // })

@@ -39,3 +39,8 @@ exports.addSalesEmployee = async (Sales) => {
 exports.getReport = async () => {
     return await db.query("select emp_first_name, emp_last_name, emp_bu from employee order by emp_bu;")
 }
+
+exports.getHighestSales = async () => {
+    return await db.query("select emp_first_name, emp_last_name, s_emp_tot_sales as Sales" +
+    " from employee inner join sales_employee using(emp_id) order by Sales desc limit 1;")
+}
